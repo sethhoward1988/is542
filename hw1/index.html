@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Backbone</title>
+</head>
+<body>
+    <header>
+        <h1>Backbone</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Information</a></li>
+                <li><a href="references.html">References</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        
+        <h2>Introduction and Setup</h2>
+        <p>
+            Backbone is JavaScript framework.  It was created in an effort to help JavaScript developers organize their code.  It is built to be used on single-page applications, which are applications that, after the intial page load, don't reload the webpage. 
+        </p>
+        <p>
+            To add Backbone to your page you need to download the latest development versions of <a href="http://backbonejs.org">Backbone</a>, <a href="http://underscorejs.org">Underscore</a>, and <a href="http://jquery.com/download/">JQuery.</a>  You'll need to create separate JavaScript files in your website's directory for each of the libraries, and copy the code from the library's download site into the respective JavaScript file.  Then you will need to references these libraries on your index.html file with script tags <code> &lt;script src="js/jquery-min.js"&gt;&lt;/script&gt;</code>.  This is usually done at the bottom of the webpage and it needs to go in the following order:
+            <ol>
+                <li>JQuery</li>
+                <li>Underscore</li>
+                <li>Backbone</li>
+            </ol>
+        </p>
+        </section>
+        <section>
+            <h2>Components</h2>
+        <p> 
+            There are 4 main components to Backbone:
+            <ul>
+                <li>Models</li>
+                <li>Collections</li>
+                <li>Views</li>
+                <li>Routers</li>
+            </ul> 
+            Each backbone component is created with the following code: 
+            <br/>
+            <code>Backbone.<em>ComponentName</em>.extend({<em>Component attributes and properties</em>});</code>   
+            <br/>
+        </p>
+        <h3>Models</h3>
+        <p>
+            Models in Backbone are created for the purpose of holding data.  They are essentially business objects, built for the intent of holding information about a specific entity.  It is created by writing the code:
+            <br/>
+            <code>Backbone.Model.extend();</code>
+            <br/>
+            Backbone models can obtain their data in several different ways:
+            <ul>
+                <li>
+                    They can have the data coded in statically: 
+                    <br/>
+                    <pre><code>
+                        var PersonModel = Backbone.Model.Extend({
+                            name:"Bob",
+                            job:"Construction worker",
+                            favoriteColor:"Yellow"
+                        });
+                    </code></pre>
+                </li>
+                <li>
+                    They can have data pulled in via a REST call to the server
+                    <br/>
+                    <pre><code>
+                        var PersonModel = Backbone.Model.Extend({
+                            url:'../api/person'
+                        });
+                    </code></pre>
+                </li>
+            </ul>  
+        </p>
+    </section>
+</body>
+</html>
