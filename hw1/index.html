@@ -18,7 +18,7 @@
         
         <h2>Introduction and Setup</h2>
         <p>
-            Backbone is JavaScript framework.  It was created in an effort to help JavaScript developers organize their code.  It is built to be used on single-page applications, which are applications that, after the intial page load, don't reload the webpage. 
+            Backbone is JavaScript framework.  It was created in an effort to help JavaScript developers organize their code.  It is built to be used on single-page applications, which are applications that, after the intial page load, don't reload the webpage.  Backbone, by itself, is intened to have the all the code written on the same page.  If you want to separate the various components into their own JavaScript files you have to use an <a href="http://en.wikipedia.org/wiki/Asynchronous_module_definition">AMD</a> library like <a href="http://requirejs.org">Require.js</a>
         </p>
         <p>
             To add Backbone to your page you need to download the latest development versions of <a href="http://backbonejs.org">Backbone</a>, <a href="http://underscorejs.org">Underscore</a>, and <a href="http://jquery.com/download/">JQuery.</a>  You'll need to create separate JavaScript files in your website's directory for each of the libraries, and copy the code from the library's download site into the respective JavaScript file.  Then you will need to references these libraries on your index.html file with script tags <code> &lt;script src="js/jquery-min.js"&gt;&lt;/script&gt;</code>.  This is usually done at the bottom of the webpage and it needs to go in the following order:
@@ -73,6 +73,83 @@
                     </code></pre>
                 </li>
             </ul>  
+        </p>
+        <h3>Collections</h3>
+        <p>
+            Collections in Backbone are groups of multiple models.  They are created by writing:
+            <br/>
+            <code>Backbone.Collection.extend();</code>
+            <br/>
+            To specify what kind of model should go into a collection you can override the model attribute of a collection:
+            <br/>
+            <pre><code>
+                var Family = Backbone.Collection.extend({
+                    model:Person
+                });
+            </code></pre>
+            You can then load models into a collection by passing the collection an array of models:
+            <br/>
+            <pre><code>
+                var Family = new Family([Person1,Person2,Person3]);
+            </code></pre>
+        </p>
+        <h3>Views</h3>
+        <p>
+            Views are Backbone entities used for displaying data.  By default they rely on the Underscore.js templating system, but you can use any templating library you want.  To create a view you use the code:
+            <br/>
+            <code>
+                Backbone.View.extend();
+            </code>
+            Each Backbone view has a property called "el" that specifies which element in the DOM it is connected to.  If nothing is specified for the el property, an empty div will be created for it.  When using an AMD librarly like Require.js with Backbone it isn't always good practice to connect a view directly to the DOM through the el property.  This is because it increases coupling, thus making it harder to manage code.  An example of adding the "el" attribute to a view would look like:
+            <br/>
+            <pre><code>
+                var familyView = Backbone.View.extend({
+                    el:"#mainContent"
+                });
+            </code></pre>
+        </p>
+        <p>
+            Backbone views are commonly connected with html templates.  The default templating language for Backbone is Underscore, but you can use almost any JavaScript templating language you want.  To load a template in Underscore you must call the <code>_.template(templateHtml,data)</code> function and pass in a reference to where the template contents can be found as well as any data needed for the template.
+            <br/>
+            <pre><code>
+                var familyView = Backbone.View.extend({
+                    initialize:function(){
+                        this.render();
+                    },
+                    render:function(){
+                        template = _.template($('#templateID').html(),personModel.toJSON());
+                        this.$el.html(template);
+                    }
+                });
+            </code></pre>
+        </p>
+        <h3>Routers</h3>
+        <p>
+            Backbone routers are used to control what happens on different urls.  A router is created with the code:
+            <br/>
+            <code>
+                Backbone.Router.extend();
+            </code>
+            To establish what functions should be connected to which urls, the <code>routes</code> attribute needs to be added to the router.
+            <br/>
+            <pre><code>
+                var Router = Backbone.Router.extend({
+                    routes:{
+                        'people':'showPeople',
+                        'people/:id':'showPerson'
+                    },
+                    showPeople:function(){
+                    
+                    },
+                    showPerson:function(id){
+                    
+                    }
+                });
+            </code></pre>
+            Backbone routers allow urls to be dynamic by including <em>:params</em> and/or <em>*splats</em>.  A <em>:param</em> will match any element that is between two slashes, such as <code>person/:id/get</code>.  The param <em>:id</em> will be passed into the function as a parameter connected to that route in the <em>routes</em>attribute.  
+        </p>
+        <p>
+            A <em>*splat</em> will match any and all elements in the url path.  This means that <code>/people/*path</code> could be used to grab any url components after <code>/people/</code>.  So <em>http://wwww.myapp.com/#/people/get/people/from/the/database</em> would return <em>get/people/from/the/database</em> for the *path splat.
         </p>
     </section>
 </body>
